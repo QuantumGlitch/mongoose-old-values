@@ -1,0 +1,33 @@
+{
+  "name": "mongoose-old-values",
+  "version": "1.0.0",
+  "description": "Package for mongoose useful for storing the old values of a model's document.",
+  "main": "index.js",
+  "dependencies": {
+    "fast-copy": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QuantumGlitch/mongoose-old-values.git"
+  },
+  "keywords": [
+    "mongoose",
+    "store",
+    "storing",
+    "old",
+    "value",
+    "values",
+    "before",
+    "edit"
+  ],
+  "author": "QuantumGlitch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/QuantumGlitch/mongoose-old-values/issues"
+  },
+  "homepage": "https://github.com/QuantumGlitch/mongoose-old-values#readme"
+}
