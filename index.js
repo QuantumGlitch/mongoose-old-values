@@ -7,20 +7,41 @@ module.exports =
     // Remember this plugin was applied
     schema.oldValues = true;
 
-    function setOldValues(doc) {
-      doc.$locals.old = {};
+    function setOldValues(doc){
+        doc.$locals.old = {
+          data: {},
 
-      // copy values
-      schema.eachPath((path) => (doc.$locals.old[path] = copy(doc.get(path))));
+          get(path) {
+            const splitted = path.split('.');
+            let currentValue = this.data[splitted.shift()];
+    
+            for (const sub of splitted) currentValue = currentValue[sub];
+    
+            return currentValue;
+          },
 
-      doc.$locals.old.get = function (path) {
-        const splitted = path.split('.');
-        const currentValue = this[splitted.shift()];
+          set(path, value){
+            const splitted = path.split('.');
+            let currentValue = this.data;
 
-        for (let sub of splitted) currentValue = currentValue[sub];
+            for (let i = 0;  i < splitted.length ; i++){
+              const sub = splitted[i];
 
-        return currentValue;
-      };
+              if(i === splitted.length - 1){
+                currentValue[sub] = value;
+                break;
+              }
+
+              if(!currentValue[sub])              
+                currentValue[sub] = {};
+
+              currentValue = currentValue[sub];
+            }        
+          }
+        };
+  
+        // copy values
+        schema.eachPath((path) => doc.$locals.old.set(path,copy(doc.get(path))));
     }
 
     schema.post('init', setOldValues);

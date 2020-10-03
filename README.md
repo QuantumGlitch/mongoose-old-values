@@ -27,7 +27,7 @@ TestSchema.plugin(require('mongoose-old-values'));
 const TestModel = mongoose.model('Test', TestSchema);
 ```
 
-It will create a new post init hook, storing the old values (copying them with one of the fastest library available fast-copy).
+It will create a new post init hook and a new post save hook, storing the old values (copying them with one of the fastest library available fast-copy).
 
 After the application of this plugin you will notice this behaviour:
 
