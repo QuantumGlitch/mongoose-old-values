@@ -7,41 +7,40 @@ module.exports =
     // Remember this plugin was applied
     schema.oldValues = true;
 
-    function setOldValues(doc){
-        doc.$locals.old = {
-          data: {},
+    function setOldValues(doc) {
+      doc.$locals.old = {
+        data: {},
 
-          get(path) {
-            const splitted = path.split('.');
-            let currentValue = this.data[splitted.shift()];
-    
-            for (const sub of splitted) currentValue = currentValue[sub];
-    
-            return currentValue;
-          },
+        get(path) {
+          const splitted = path.split('.');
+          let currentValue = this.data[splitted.shift()];
 
-          set(path, value){
-            const splitted = path.split('.');
-            let currentValue = this.data;
+          for (const sub of splitted) currentValue = currentValue[sub];
 
-            for (let i = 0;  i < splitted.length ; i++){
-              const sub = splitted[i];
+          return currentValue;
+        },
 
-              if(i === splitted.length - 1){
-                currentValue[sub] = value;
-                break;
-              }
+        set(path, value) {
+          const splitted = path.split('.');
+          let currentValue = this.data;
 
-              if(!currentValue[sub])              
-                currentValue[sub] = {};
+          for (let i = 0; i < splitted.length; i++) {
+            const sub = splitted[i];
 
-              currentValue = currentValue[sub];
-            }        
+            if (i === splitted.length - 1) {
+              currentValue[sub] = value;
+              break;
+            }
+
+            if (!currentValue[sub]) currentValue[sub] = {};
+
+            currentValue = currentValue[sub];
           }
-        };
-  
-        // copy values
-        schema.eachPath((path) => doc.$locals.old.set(path,copy(doc.get(path))));
+        },
+      };
+
+      // copy values
+      schema.eachPath((path) => doc.$locals.old.set(path, copy(doc.get(path))));
     }
 
     schema.post('init', setOldValues);
