@@ -1,6 +1,6 @@
 {
   "name": "mongoose-old-values",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Package for mongoose useful for storing the old values of a model's document.",
   "main": "index.js",
   "dependencies": {
